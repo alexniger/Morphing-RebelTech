@@ -1,6 +1,5 @@
 
-
-#include "WaveFormOsc.h"
+#include "MorphOsc.h"
 
 #include "FastFourierTransform.h"
 #include "Patch.h"
@@ -8,7 +7,7 @@
 
 
 
-class WTMatrix {
+class WTFactory {
 	
 	private:
 
@@ -21,15 +20,15 @@ class WTMatrix {
 	
     int numWaveTables;
 	
-	WTMatrix() {
+	WTFactory() {
 		numWaveTables = 7;
 		int len = 256;
 		fourier = new FastFourierTransform();
 		fourier->init(len);
 	}
-	~WTMatrix();
+	~WTFactory();
 	
 	int calccycles (int WTlen, int fulllen);
-	int makeWaveTable(WaveFormOsc *osc, FloatArray sample, float baseFrequency, int WTlen, int WFid, int numcycles);
-	int makeMatrix(WaveFormOsc *osc, FloatArray fullsample, int WTlen, float baseFrequency);
+	int makeWaveTable(MorphOsc *osc, FloatArray sample, float baseFrequency, int WTlen, int WFid, int numcycles);
+	int makeMatrix(MorphOsc *osc, FloatArray fullsample, int WTlen, float baseFrequency);
 	}; 

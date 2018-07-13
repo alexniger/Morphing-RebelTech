@@ -1,6 +1,6 @@
-#include "WaveFormOsc.h"
+#include "MorphOsc.h"
 
-WaveFormOsc::WaveFormOsc(void) {										// initialisation
+MorphOsc::MorphOsc(void) {										// initialisation
     phasor = 0.0;
     phaseInc = 0.0;
     phaseOfs = 0.5;
@@ -15,7 +15,7 @@ WaveFormOsc::WaveFormOsc(void) {										// initialisation
 }
 
 
-WaveFormOsc::~WaveFormOsc(void) {										
+MorphOsc::~MorphOsc(void) {										
     for (int idx = 0; idx < numWaveTableSlots; idx++) {
         float *tempA = WaveTables[idx].waveTable;
         if (tempA != 0)
@@ -34,7 +34,7 @@ WaveFormOsc::~WaveFormOsc(void) {
 //
 // returns 0 upon success, or the number of wavetables if no more room is available
 //
-int WaveFormOsc::addWaveTable(int len, float *waveTableIn, float topFreq, int WFid, int numcycles) {   				//double topFreq
+int MorphOsc::addWaveTable(int len, float *waveTableIn, float topFreq, int WFid, int numcycles) {   				//double topFreq
     	
     	
     this->numWaveForms = numcycles;
@@ -62,7 +62,7 @@ int WaveFormOsc::addWaveTable(int len, float *waveTableIn, float topFreq, int WF
 //
 // returns the current oscillator output
 //
-float WaveFormOsc::getOutputAtIndex(int waveTableIdx) {
+float MorphOsc::getOutputAtIndex(int waveTableIdx) {
     waveTable *waveTable = &this->WaveTables[waveTableIdx];
     
 
@@ -81,7 +81,7 @@ float WaveFormOsc::getOutputAtIndex(int waveTableIdx) {
 }
 
 
-float WaveFormOsc::getMorphOutput() {
+float MorphOsc::getMorphOutput() {
     // grab the appropriate extWF and then BL
 
     this->numWaveTables = (this->totalWaves) / (this->numWaveForms);

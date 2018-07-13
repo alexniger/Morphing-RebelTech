@@ -1,8 +1,8 @@
-#include "WTMatrix.h"
+#include "WTFactory.h"
 
 	
 	
-//float WTMatrix::filtExt(float filtFreq, int len, int Order)	{
+//float WTFactory::filtExt(float filtFreq, int len, int Order)	{
 	
 	//float filtwave[1][len];
 	////extFilter->setExtFIR(filtFreq, 60);
@@ -15,7 +15,7 @@
 	////return filtwave;
 //}
 
-int WTMatrix::calccycles(int WTlen, int fulllen) {
+int WTFactory::calccycles(int WTlen, int fulllen) {
 	
 	float numcyclestest = (float) fulllen / (float) WTlen ;
 	float numcyclestemp = fulllen / WTlen ;
@@ -31,7 +31,7 @@ int WTMatrix::calccycles(int WTlen, int fulllen) {
 }
 	
     
-int WTMatrix::makeWaveTable(WaveFormOsc *osc, FloatArray sample, float baseFrequency, int WTlen, int WFid, int numcycles)     {
+int WTFactory::makeWaveTable(MorphOsc *osc, FloatArray sample, float baseFrequency, int WTlen, int WFid, int numcycles)     {
 	
 	
 
@@ -81,7 +81,7 @@ int WTMatrix::makeWaveTable(WaveFormOsc *osc, FloatArray sample, float baseFrequ
 
 
 
-int WTMatrix::makeMatrix(WaveFormOsc *osc, FloatArray fullsample, int WTlen, float baseFrequency)     {
+int WTFactory::makeMatrix(MorphOsc *osc, FloatArray fullsample, int WTlen, float baseFrequency)     {
 	
 	int numWFs =  fullsample.getSize() / WTlen; // calccycles(WTlen, fullsample.getSize());
 	FloatArray tempsample; // = FloatArray::create((fullsample.getSize())/numWFs);

@@ -1,17 +1,17 @@
 
-#include "WaveFormOsc.h"
-#include "WTMatrix.h"
+#include "MorphOsc.h"
+#include "WTFactory.h"
 
 #include "AMEN_LOOhalf.h"
 
 #define baseFrequency (20)  /* starting frequency of first table */  // c1 = 32.7 Hz
 
-class Morphing1Patch : public Patch {
+class DualMorphing1DPatch : public Patch {
 private:
-  WaveFormOsc *osc;
-  WaveFormOsc *osc2;
-  WTMatrix *wtm;
-//  WTMatrix *wtm2;
+  MorphOsc *osc1;
+  MorphOsc *osc2;
+  WTFactory *wtm;
+//  WTFactory *wtm2;
   
   SmoothFloat freqA;
   SmoothFloat amp;
@@ -19,16 +19,16 @@ private:
   FloatParameter Pac ;
   
 public:
-  Morphing1Patch() {																		
-	  osc = new WaveFormOsc();															
-	  osc2 = new WaveFormOsc();	
-	  wtm = new WTMatrix();	
-	//  wtm2 = new WTMatrix();		
+  DualMorphing1DPatch() {																		
+	  osc1 = new MorphOsc();															
+	  osc2 = new MorphOsc();	
+	  wtm = new WTFactory();	
+	//  wtm2 = new WTFactory();		
 	  int foobarlen = 256;
 	  int numwaves = 4;
 	  FloatArray sample(AL32samples[0], sizeof(AL32samples[0])/sizeof(float));
 	
-	int val1 = wtm->makeMatrix(osc, sample, foobarlen, baseFrequency);
+	int val1 = wtm->makeMatrix(osc1, sample, foobarlen, baseFrequency);
 	int val2 = wtm->makeMatrix(osc2, sample, foobarlen, baseFrequency);
 
 	  //debugMessage("coupure", osc->numWaveForms, fullsample.getSize());
@@ -48,30 +48,22 @@ public:
     
     float note = getParameterValue(PARAMETER_A)*120.0 + 17.0;
     freqA = exp2f((note-69.0)/12.0)*440.0;
-    osc->setFrequency(freqA/sampleRate);
+    osc1->setFrequency(freqA/sampleRate);
    
     float morphC = getParameterValue(PARAMETER_C);  
     //if (morphC >= 1)  {
 		//morphC-- ; 
 		//}
-    osc->setMorphing(morphC);
+    osc1->setMorphing(morphC);
     
     float morphD = getParameterValue(PARAMETER_D); 
     
 	enum mode {SYNC, DETUNE};
-    //bool switchSync = 0;
-    //bool switchDetune = 0;
-    //if (switchDetune == 1 && switchSync == 0) {
-		//mode = 2;
-	//}
-	//else if (switchSync == 1) {
-			//mode = 1;
-		//}
-		//else mode = 0
+
 	
 	switch (2) {
 		case SYNC:
-			unphased = morphC + (morphD / osc->numWaveForms);
+			unphased = morphC + (morphD / osc1->numWaveForms);
 			if (unphased >= 1)  {
 				unphased-- ; 
 				}
@@ -88,19 +80,17 @@ public:
 			osc2->setFrequency(freqA/sampleRate);
 	}
     
-	//debugMessage("coupure", up->getMorphOutput(), freqA);
-    debugMessage("coupure", 0.0, (float) osc->totalWaves);
+    debugMessage("coupure", 0.0, (float) osc1->totalWaves);
     
     amp = getParameterValue(PARAMETER_B);
     FloatArray left = buffer.getSamples(LEFT_CHANNEL);
     FloatArray right = buffer.getSamples(RIGHT_CHANNEL);
     
     for(int n = 0; n<buffer.getSize(); n++){
-		left[n] = (osc->getMorphOutput() * amp) * 0.5;				
+		left[n] = (osc1->getMorphOutput() * amp) * 0.5;				
 		right[n] = (osc2->getMorphOutput()) * amp * 0.5;	
-		osc->updatePhase(); 
+		osc1->updatePhase(); 
 		osc2->updatePhase();
 	}
 	}
 };
-

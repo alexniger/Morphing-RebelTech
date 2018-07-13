@@ -1,4 +1,3 @@
-
 #include "message.h"
 #include "Patch.h"
 
@@ -21,7 +20,7 @@ typedef struct {
     float *waveTable;
 } waveTable;
 
-class WaveFormOsc {
+class MorphOsc {
 private:
     float phasor;      // phase accumulator
     float phaseInc;    // phase increment
@@ -37,8 +36,8 @@ public:
     int numWaveForms;
     int numWaveTables;
 
-    WaveFormOsc(void);
-    ~WaveFormOsc(void);
+    MorphOsc(void);
+    ~MorphOsc(void);
     void setFrequency(float pinc);
     void setPhaseOffset(float poffset);
     void updatePhase(void);
@@ -52,20 +51,20 @@ public:
 
 
 // note: if you don't keep this in the range of 0-1, you'll need to make changes elsewhere
-inline void WaveFormOsc::setFrequency(float pinc) {
+inline void MorphOsc::setFrequency(float pinc) {
     phaseInc = pinc;
 }
 
 
 
 // note: if you don't keep this in the range of 0-1, you'll need to make changes elsewhere
-inline void WaveFormOsc::setPhaseOffset(float poffset) {
+inline void MorphOsc::setPhaseOffset(float poffset) {
     phaseOfs = poffset;
 }
 
 
 
-inline void WaveFormOsc::updatePhase() {
+inline void MorphOsc::updatePhase() {
     phasor += phaseInc;
     
     if (phasor >= 1.0)
@@ -73,7 +72,7 @@ inline void WaveFormOsc::updatePhase() {
 }
 
 // note: if you don't keep this in the range of 0-1, you'll need to make changes elsewhere
-inline void WaveFormOsc::setMorphing(float mposition) {
+inline void MorphOsc::setMorphing(float mposition) {
     morphor = mposition;
     if (morphor >= 1.0)
     morphor -= 1.0;	
@@ -81,7 +80,7 @@ inline void WaveFormOsc::setMorphing(float mposition) {
 
 
 // note: if you don't keep this in the range of 0-1, you'll need to make changes elsewhere
-inline void WaveFormOsc::setMorphOffset(float moffset) {
+inline void MorphOsc::setMorphOffset(float moffset) {
     morphOfs = moffset;
 }
 
