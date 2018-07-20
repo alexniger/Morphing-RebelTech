@@ -1,6 +1,7 @@
 
 #include "WaveFormOsc.h"
 #include "WTMatrix.h"
+//#include "OscSelector.h"
 
 #include "AMEN_LOOreduced.h"
 
@@ -77,10 +78,10 @@ public:
     oscs[intPart]->setFrequency(freqA/sampleRate);
     oscs[intPart]->setMorphing(morphC);
     
-    if (++intPart >= numOsc) {
+    intPart++;
+    if (intPart >= numOsc) {
         intPart -= intPart ;
 	}
-	else intPart++;
     
     oscs[intPart]->setMorphing(morphC);		
 	oscs[intPart]->setFrequency(freqA/sampleRate);
@@ -99,10 +100,10 @@ public:
     
     float down = oscs[intP]->getMorphOutput() * (1 - fracP);
 	oscs[intP]->updatePhase(); 
-	if (++intP >= numOsc) {
+	intP++;
+	if (intP >= numOsc) {
         intP -= intP ;
 	}
-	else intP++;
     float up = oscs[intP]->getMorphOutput() * (fracP);
 	oscs[intP]->updatePhase();
 	
