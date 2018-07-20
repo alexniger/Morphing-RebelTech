@@ -63,9 +63,8 @@ int WaveFormOsc::addWaveTable(int len, float *waveTableIn, float topFreq, int WF
 // returns the current oscillator output
 //
 float WaveFormOsc::getOutputAtIndex(int waveTableIdx) {
+	
     waveTable *waveTable = &this->WaveTables[waveTableIdx];
-    
-
 
     float temp = this->phasor * waveTable->waveTableLen;
     int intPart = temp;
@@ -83,7 +82,6 @@ float WaveFormOsc::getOutputAtIndex(int waveTableIdx) {
 
 float WaveFormOsc::getMorphOutput() {
     // grab the appropriate extWF and then BL
-
     this->numWaveTables = (this->totalWaves) / (this->numWaveForms);
 
     int waveTableIdx = 0;

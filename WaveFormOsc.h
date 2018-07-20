@@ -48,6 +48,7 @@ public:
     
     float getMorphOutput();
 	float getOutputAtIndex(int waveTableIdx);
+    float getMorphOutputAtIndex(int oscIdx);
 };
 
 

@@ -2,7 +2,8 @@
 #include "MorphOsc.h"
 #include "WTFactory.h"
 
-#include "AMEN_LOOhalf.h"
+#include "bank1_410.h"
+#include "dose3_wit.h"
 
 #define baseFrequency (20)  /* starting frequency of first table */  // c1 = 32.7 Hz
 
@@ -11,7 +12,6 @@ private:
   MorphOsc *osc1;
   MorphOsc *osc2;
   WTFactory *wtm;
-//  WTFactory *wtm2;
   
   SmoothFloat freqA;
   SmoothFloat amp;
@@ -22,14 +22,14 @@ public:
   DualMorphing1DPatch() {																		
 	  osc1 = new MorphOsc();															
 	  osc2 = new MorphOsc();	
-	  wtm = new WTFactory();	
-	//  wtm2 = new WTFactory();		
+	  wtm = new WTFactory();		
 	  int foobarlen = 256;
 	  int numwaves = 4;
-	  FloatArray sample(AL32samples[0], sizeof(AL32samples[0])/sizeof(float));
+	  FloatArray sample1(bank1[0], sizeof(bank1[0])/sizeof(float));
+	  FloatArray sample2(dose2[0], sizeof(dose2[0])/sizeof(float));
 	
-	int val1 = wtm->makeMatrix(osc1, sample, foobarlen, baseFrequency);
-	int val2 = wtm->makeMatrix(osc2, sample, foobarlen, baseFrequency);
+	int val1 = wtm->makeMatrix(osc1, sample1, foobarlen, baseFrequency);
+	int val2 = wtm->makeMatrix(osc2, sample1, foobarlen, baseFrequency);
 
 	  //debugMessage("coupure", osc->numWaveForms, fullsample.getSize());
 	  //freq = getFloatParameter("Frequency", baseFrequency, c5, c3, 0.97, 0.0, Patch::EXP);
