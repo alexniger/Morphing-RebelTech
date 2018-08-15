@@ -13,22 +13,31 @@ class WTFactory {
 
 	FastFourierTransform *fourier; 
 	
-	//float filtExt(float filtFreq, int len, int Order);
+	ComplexFloatArray fft;
+	ComplexFloatArray tmp;
+	FloatArray dest;
+	FloatArray zeros;
 	
 	public:
 	
 	
-    int numWaveTables;
 	
 	WTFactory() {
-		numWaveTables = 7;
-		int len = 256;
 		fourier = new FastFourierTransform();
-		fourier->init(len);
+		fourier->init(SAMPLE_LEN);
+		fft = ComplexFloatArray::create(SAMPLE_LEN);
+		tmp = ComplexFloatArray::create(SAMPLE_LEN);
+		dest = FloatArray::create(SAMPLE_LEN);
+		zeros = FloatArray::create(SAMPLE_LEN);
 	}
-	~WTFactory();
+	~WTFactory(){
+	ComplexFloatArray::destroy(fft);
+	ComplexFloatArray::destroy(tmp);
+	FloatArray::destroy(dest);
+	FloatArray::destroy(zeros);
+}
 	
 	int calccycles (int WTlen, int fulllen);
-	int makeWaveTable(MorphOsc *osc, FloatArray sample, float baseFrequency, int WTlen, int WFid, int numcycles);
-	int makeMatrix(MorphOsc *osc, FloatArray fullsample, int WTlen, float baseFrequency);
+	int makeWaveTable(MorphOsc *osc, FloatArray sample, float baseFrequency, int WFid);
+	void makeMatrix(MorphOsc *osc, FloatArray fullsample, float baseFrequency);
 	}; 

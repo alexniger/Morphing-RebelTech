@@ -17,9 +17,9 @@ MorphOsc::MorphOsc(void) {										// initialisation
 
 MorphOsc::~MorphOsc(void) {										
     for (int idx = 0; idx < numWaveTableSlots; idx++) {
-        float *tempA = WaveTables[idx].waveTable;
-        if (tempA != 0)
-            delete [] tempA;
+        float *temp = WaveTables[idx].waveTable;
+        if (temp != 0)
+            delete [] temp;
     }
 }
 

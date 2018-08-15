@@ -5,7 +5,7 @@
 
 //#define baseFrequency (20)  /* starting frequency of first table */  // c1 = 32.7 Hz
 
-class OscSelector {
+class OscSelectorOld {
 private:
 	MorphOsc *oscs[NOF_OSC];
 	MorphOsc* down;
@@ -14,11 +14,11 @@ private:
     
 public:
 
-    OscSelector(void);
-    ~OscSelector(void);
+    OscSelectorOld(void);
+    ~OscSelectorOld(void);
 	
 	
-    void setWaveTables(WTFactory *wtf, FloatArray banks, float baseFrequency, int Idx);
+    void setWaveTables(WTFactory *wtf, float* banks, float baseFrequency, int Idx);
     
     void setMorphY(float morphY);
     void setMorphX(float morphX);

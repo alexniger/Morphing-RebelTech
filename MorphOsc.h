@@ -9,9 +9,14 @@
 
 //#define c1 (32.7) , c4 (261) 
 
-#define sampleRate (48000)
+#define sampleRate 48000
 
-const int numWaveTableSlots = 230;
+#define NOF_OSC 7
+#define SAMPLE_LEN 256
+#define NOF_SAMPLES 6
+#define NOF_BandLimWT 7
+
+const int numWaveTableSlots = NOF_BandLimWT*NOF_SAMPLES + 2;
 
 typedef struct {
     float topFreq;

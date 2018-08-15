@@ -1,6 +1,6 @@
-#include "OscSelector.h"
+#include "OscSelectorOld.h"
 
-OscSelector::OscSelector(void) {										
+OscSelectorOld::OscSelectorOld(void) {										
    for (int i = 0 ; i<NOF_OSC ; i++)  {
 		oscs[i] = new MorphOsc();
 	}	
@@ -10,18 +10,20 @@ OscSelector::OscSelector(void) {
 }
 
 
-OscSelector::~OscSelector(void) {
+OscSelectorOld::~OscSelectorOld(void) {
 }
 
 
 
-void OscSelector::setWaveTables(WTFactory *wtf, FloatArray banks, float baseFrequency, int Idx)  { 
-		FloatArray bank = banks.subArray(Idx*SAMPLE_LEN*NOF_SAMPLES, SAMPLE_LEN*NOF_SAMPLES);
+void OscSelectorOld::setWaveTables(WTFactory *wtf, float* banks, float baseFrequency, int Idx)  {   				
+    //for (int i=0 ; i<NOF_OSC ; i++)  {
+		FloatArray bank(banks, SAMPLE_LEN*NOF_SAMPLES);
 		wtf->makeMatrix(oscs[Idx], bank, baseFrequency);
+    //}
     
 }
 
-void OscSelector::setMorphY(float morphY){
+void OscSelectorOld::setMorphY(float morphY){
 	float temp = morphY * NOF_OSC;
     int intPart = temp;
     mix = temp - intPart;
@@ -39,7 +41,7 @@ void OscSelector::setMorphY(float morphY){
 //
 // returns 2 oscillators outputs
 //
-float OscSelector::get2DOutput() {
+float OscSelectorOld::get2DOutput() {
    
     float downValue = down -> getMorphOutput() * (1 - mix);
 
@@ -49,21 +51,21 @@ float OscSelector::get2DOutput() {
 }
 
 
-void OscSelector::setFrequency(float freq)  {
+void OscSelectorOld::setFrequency(float freq)  {
    
    down -> setFrequency(freq);
    up -> setFrequency(freq);  
     
 }
 
-void OscSelector::setMorphX(float morphX)  {
+void OscSelectorOld::setMorphX(float morphX)  {
    
    down -> setMorphing(morphX);
    up -> setMorphing(morphX);   
     
 }
 
-void OscSelector::updatePhases()  {
+void OscSelectorOld::updatePhases()  {
 	
 	down -> updatePhase();
     up -> updatePhase();

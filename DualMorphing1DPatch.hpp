@@ -3,9 +3,10 @@
 #include "WTFactory.h"
 
 #include "bank1_410.h"
-#include "dose3_wit.h"
+//#include "dose3_wit.h"
 
 #define baseFrequency (20)  /* starting frequency of first table */  // c1 = 32.7 Hz
+
 
 class DualMorphing1DPatch : public Patch {
 private:
@@ -15,24 +16,21 @@ private:
   
   SmoothFloat freqA;
   SmoothFloat amp;
-  FloatParameter Fc;
-  FloatParameter Pac ;
   
 public:
-  DualMorphing1DPatch() {																		
+  DualMorphing1DPatch() {	
 	  osc1 = new MorphOsc();															
 	  osc2 = new MorphOsc();	
 	  wtm = new WTFactory();		
 	  int foobarlen = 256;
 	  int numwaves = 4;
 	  FloatArray sample1(bank1[0], sizeof(bank1[0])/sizeof(float));
-	  FloatArray sample2(dose2[0], sizeof(dose2[0])/sizeof(float));
+	  //FloatArray sample2(dose2[0], sizeof(dose2[0])/sizeof(float));
 	
-	int val1 = wtm->makeMatrix(osc1, sample1, foobarlen, baseFrequency);
-	int val2 = wtm->makeMatrix(osc2, sample1, foobarlen, baseFrequency);
+	wtm->makeMatrix(osc1, sample1, baseFrequency);
+	wtm->makeMatrix(osc2, sample1, baseFrequency);
 
-	  //debugMessage("coupure", osc->numWaveForms, fullsample.getSize());
-	  //freq = getFloatParameter("Frequency", baseFrequency, c5, c3, 0.97, 0.0, Patch::EXP);
+
 	  registerParameter(PARAMETER_A, "Frequency");
 	  registerParameter(PARAMETER_B, "Amp");
 	  registerParameter(PARAMETER_C, "Filter");
